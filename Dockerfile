@@ -5,11 +5,11 @@
 FROM ruby:3.1-slim-bullseye
 
 # Install MailHog:
-RUN apt update \
-  && apt install -y build-essential sqlite3 libsqlite3-dev \
+RUN apt-get update \
+  && apt-get install -y build-essential pkg-config sqlite3 libsqlite3-dev \
   && gem install mailcatcher --version 0.8.2 --no-document \
-  && apt remove -y build-essential \
-  && apt autoremove -y
+  && apt-get remove -y build-essential pkg-config \
+  && apt-get autoremove -y
 
 RUN useradd -ms /bin/bash -u 1000 mailcatcher
 
