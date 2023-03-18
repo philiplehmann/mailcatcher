@@ -3,8 +3,8 @@ docker buildx use default
 build_image() {
   name=$1
   replaced=${name/\//"-"}
-  docker buildx build --pull --platform=linux/$1 --tag=philiplehmann/mailcatcher:v0.8.2-$replaced .
-  docker tag philiplehmann/mailcatcher:v0.8.2-$replaced philiplehmann/mailcatcher:latest-$replaced
+  docker buildx build --pull --platform=linux/$1 --tag=philiplehmann/mailcatcher:v0.9.0.beta2-$replaced .
+  docker tag philiplehmann/mailcatcher:v0.9.0.beta2-$replaced philiplehmann/mailcatcher:latest-$replaced
 }
 export -f build_image
 
@@ -16,22 +16,22 @@ deploy_image() {
   name=$1
   replaced=${name/\//"-"}
   docker push philiplehmann/mailcatcher:latest-$replaced
-  docker push philiplehmann/mailcatcher:v0.8.2-$replaced
+  docker push philiplehmann/mailcatcher:v0.9.0.beta2-$replaced
 }
 export -f deploy_image
 
 parallel -kj6 deploy_image ::: amd64 arm/v5 arm/v7 arm64/v8 mips64le ppc64le s390x
 
-docker manifest create --amend philiplehmann/mailcatcher:v0.8.2 \
-                               philiplehmann/mailcatcher:v0.8.2-amd64 \
-                               philiplehmann/mailcatcher:v0.8.2-arm-v5 \
-                               philiplehmann/mailcatcher:v0.8.2-arm-v7 \
-                               philiplehmann/mailcatcher:v0.8.2-arm64-v8 \
-                               philiplehmann/mailcatcher:v0.8.2-mips64le \
-                               philiplehmann/mailcatcher:v0.8.2-ppc64le \
-                               philiplehmann/mailcatcher:v0.8.2-s390x
+docker manifest create --amend philiplehmann/mailcatcher:v0.9.0.beta2 \
+                               philiplehmann/mailcatcher:v0.9.0.beta2-amd64 \
+                               philiplehmann/mailcatcher:v0.9.0.beta2-arm-v5 \
+                               philiplehmann/mailcatcher:v0.9.0.beta2-arm-v7 \
+                               philiplehmann/mailcatcher:v0.9.0.beta2-arm64-v8 \
+                               philiplehmann/mailcatcher:v0.9.0.beta2-mips64le \
+                               philiplehmann/mailcatcher:v0.9.0.beta2-ppc64le \
+                               philiplehmann/mailcatcher:v0.9.0.beta2-s390x
 
-docker manifest push philiplehmann/mailcatcher:v0.8.2
+docker manifest push philiplehmann/mailcatcher:v0.9.0.beta2
 
 docker manifest create --amend philiplehmann/mailcatcher:latest \
                                philiplehmann/mailcatcher:latest-amd64 \
