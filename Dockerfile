@@ -2,7 +2,7 @@
 # MailCatcher Dockerfile
 #
 
-FROM ruby:3.1-slim-bullseye
+FROM ruby:3.2-slim-bullseye
 
 # Install MailHog:
 RUN apt-get update \
